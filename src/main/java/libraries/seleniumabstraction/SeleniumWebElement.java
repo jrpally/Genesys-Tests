@@ -3,7 +3,6 @@ package libraries.seleniumabstraction;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,7 +14,7 @@ import java.util.List;
 public class SeleniumWebElement implements IWebElement {
     private final WebDriver driver;
     private final WebElement webElement;
-    private Duration timeoutInSeconds = Duration.ofSeconds(30);
+    private final Duration timeoutInSeconds = Duration.ofSeconds(30);
 
     public SeleniumWebElement(WebDriver driver, WebElement webElement) {
         if (driver == null) {
@@ -54,7 +53,7 @@ public class SeleniumWebElement implements IWebElement {
 
     private void waitForText(WebElement webElement) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
-        wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementValue(webElement, "")));
+        wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(webElement, "")));
     }
 
     @Override

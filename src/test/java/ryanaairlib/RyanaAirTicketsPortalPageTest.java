@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -29,7 +30,8 @@ class RyanaAirTicketsPortalPageTest {
 
     @BeforeEach
     void setUp() throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+        //System.setProperty("webdriver.edge.driver", "C:/chromedriver/chromedriver_win32/msedgedriver.exe");
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options); //new EdgeDriver(options);
         webBrowser = new WrapperWebBrowser(driver);
         flightsPage = new FlightsPage(webBrowser);
     }
@@ -83,13 +85,13 @@ class RyanaAirTicketsPortalPageTest {
         // Choose the first valid departure date
         flightsPage.getDepartDate().programmaticClick();
         List<IDayControl> dayControls = flightsPage.getDepartDate().getDays();
-        IDayControl dayControl = dayControls.stream().findFirst().orElse(null);
+        IDayControl dayControl = dayControls.get((dayControls.size()-1) / 2);
         dayControl.programmaticClick();
 
         // Choose the valid return date
         flightsPage.getReturnDate().programmaticClick();
         List<IDayControl> returnDays = flightsPage.getReturnDate().getDays();
-        IDayControl returnDayControl = returnDays.get(returnDays.size() - 1);
+        IDayControl returnDayControl = returnDays.get((returnDays.size() - 1) / 2);
         returnDayControl.programmaticClick();
 
         // Choose two Adults passenger

@@ -24,6 +24,10 @@ public class Criteria {
         return new Criteria(By.id(id));
     }
 
+    public String toString() {
+        return getBy().toString();
+    }
+
     public By getBy() {
         return this.xpath;
     }

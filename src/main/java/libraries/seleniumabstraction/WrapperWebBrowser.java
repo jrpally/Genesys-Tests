@@ -8,6 +8,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ryanaairlib.IWebBrowser;
 
 import java.net.MalformedURLException;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WrapperWebBrowser implements IWebBrowser {
-
+    private static Logger LOGGER = LoggerFactory.getLogger(WrapperWebBrowser.class);
     private WebDriver driver;
     private Duration timeoutInSeconds = Duration.ofSeconds(60);
 
@@ -30,11 +32,13 @@ public class WrapperWebBrowser implements IWebBrowser {
 
     @Override
     public void goTo(String url) {
+        LOGGER.info("Navigate to url " + url);
         driver.navigate().to(url);
     }
 
     @Override
     public void quit() {
+        LOGGER.info("quitting wrapped browser");
         driver.close();
         driver.quit();
         driver = null;
@@ -47,6 +51,7 @@ public class WrapperWebBrowser implements IWebBrowser {
 
     @Override
     public List<IWebElement> findElements(Criteria by) {
+        LOGGER.info("findElements with parameter " + by.toString());
         WaitPageLad();
         WaitForElements(by);
         List<WebElement> webElement = this.driver.findElements(by.getBy());
@@ -76,6 +81,7 @@ public class WrapperWebBrowser implements IWebBrowser {
     }
 
     private void WaitPageLad() {
+        LOGGER.debug("WaitPageLoad");
         new WebDriverWait(driver, Duration.ofSeconds(30)).until((ExpectedCondition<Boolean>) wd ->
                 ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
     }

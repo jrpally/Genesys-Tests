@@ -24,7 +24,7 @@ public abstract class DateControl {
 
     public List<IDayControl> getDays() {
         IWebElement parentDayControl = this.webBrowser.findElement(getDaysCriteria());
-        List<IWebElement> validDays = parentDayControl.findElements(Criteria.byXpath("//*[starts-with(@class,'calendar-body__cell-wrap')]/div[not(contains(@class,'disabled'))]"));
+        List<IWebElement> validDays = parentDayControl.findElements(Criteria.byXpath(".//*[starts-with(@class,'calendar-body__cell-wrap')]/div[not(contains(@class,'disabled'))]"));
         List<IDayControl> result = new ArrayList<>();
         for (IWebElement validDay : validDays) {
             result.add(new DayControl(this.webBrowser, validDay));
